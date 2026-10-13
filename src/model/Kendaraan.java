@@ -80,8 +80,19 @@ public abstract class Kendaraan {
 
         //[OCP] Setiap subclass menentukan sendiri nama jenis & cara hitung biayanya.
         public abstract String getJenis();
-        
+
+        //[LSP] Kontrak yang wajib dipatuhi semua subclass:
+        //      - Prasyarat: hari >= getMinimalHari()
+        //      - Hasil    : biaya > 0, tanpa melempar exception
+        //      Subclass boleh menghitung dengan cara berbeda.
         public abstract long hitungBiaya(int hari);
+
+        //[LSP] Aturan minimal sewa dijadikan bagian dari kontrak kelas induk.
+        //      Default 1 hari; subclass boleh mengubah nilainya, dan pemanggil
+        //      (Controller) cukup bertanya ke sini tanpa perlu tahu jenis kendaraannya.
+        public int getMinimalHari() {
+                return 1;
+        }
 
         public String getPlatNomor() { return platNomor; }
         public String getMerk() { return merk; }
